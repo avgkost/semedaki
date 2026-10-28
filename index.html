@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f1e8">
+<title>Semedaki — a little piece of home</title>
+<style>
+:root{--paper:#f6f1e8;--ink:#292923;--muted:#77766d;--terracotta:#b66d52;--sage:#a6ad91;--line:#e2dbcf;--white:#fffdf8}
+*{box-sizing:border-box} html{background:var(--paper)} body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.015em}
+button,input{font:inherit} button{cursor:pointer}
+.app{max-width:480px;margin:0 auto;min-height:100vh;padding:env(safe-area-inset-top) 18px calc(90px + env(safe-area-inset-bottom));}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 2px 14px}
+.brand{font-family:Georgia,serif;font-size:28px;letter-spacing:-.06em;font-weight:700}.brand span{color:var(--terracotta)}
+.pill{border:1px solid var(--line);border-radius:99px;padding:7px 11px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--terracotta);font-weight:700;margin:12px 0 9px}
+h1{font-family:Georgia,serif;font-size:36px;line-height:1.02;letter-spacing:-.05em;font-weight:500;margin:0 0 12px}
+.intro{font-size:14px;line-height:1.5;color:var(--muted);max-width:330px;margin:0 0 22px}
+.hero{position:relative;overflow:hidden;border-radius:24px;background:#ded7c8;min-height:330px;display:flex;align-items:flex-end;margin-bottom:26px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 48% 25%,#f7f0df 0%,#d4c5ae 53%,#b9a58d 100%)}
+.hero-sun{position:absolute;width:170px;height:170px;border-radius:50%;background:#f6e7c6;top:28px;left:calc(50% - 85px);box-shadow:0 0 0 18px #f6e7c622}
+.hero-lace{position:absolute;top:0;left:0;right:0;height:48%;background-color:#fffdf8e8;background-image:radial-gradient(circle at 12px 12px,transparent 7px,#fffdf8 7.5px,#fffdf8 9px,transparent 9.5px),radial-gradient(circle at 0 0,transparent 6px,#fffdf8 6.5px,#fffdf8 8px,transparent 8.5px);background-size:24px 24px,24px 24px;opacity:.95;border-bottom:2px dotted #fffdf8}
+.hero-lace:after{content:"";position:absolute;left:0;right:0;bottom:-13px;height:26px;background:radial-gradient(circle at 12px 0,#fffdf8 12px,transparent 12.8px) 0 0/24px 26px repeat-x}
+.hero-caption{position:relative;width:100%;padding:24px 22px 21px;background:linear-gradient(transparent,#1e211b99);color:white}
+.hero-caption small{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:7px;opacity:.85}
+.hero-caption strong{font-family:Georgia,serif;font-size:25px;font-weight:500;display:block}
+.section-head{display:flex;align-items:end;justify-content:space-between;margin:22px 0 13px}
+.section-head h2{font-family:Georgia,serif;font-weight:500;font-size:23px;letter-spacing:-.04em;margin:0}
+.text-button{border:0;background:transparent;color:var(--terracotta);font-size:12px;font-weight:700;padding:6px 0}
+.designs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.design-card{border:1px solid var(--line);background:var(--white);border-radius:18px;overflow:hidden;padding:0;text-align:left;color:inherit;min-width:0}
+.design-art{height:170px;position:relative;overflow:hidden;background:#d8c9b2}
+.art-1{background:linear-gradient(145deg,#dfd1b8,#b2b7a0)} .art-2{background:linear-gradient(145deg,#f0d9c9,#c88b75)} .art-3{background:linear-gradient(145deg,#d8d5c8,#a8b7b0)} .art-4{background:linear-gradient(145deg,#e8d8ad,#b6a06d)}
+.motif{position:absolute;inset:0;opacity:.92;background-image:radial-gradient(circle at 12px 12px,transparent 6px,#fffaf0 6.7px,#fffaf0 8px,transparent 8.7px),radial-gradient(circle at 0 0,transparent 5px,#fffaf0 5.7px,#fffaf0 7px,transparent 7.7px);background-size:24px 24px}
+.motif.top{bottom:auto;height:46%;border-bottom:2px dotted #fffaf0}.motif.bottom{top:auto;height:40%;border-top:2px dotted #fffaf0}
+.motif.corner{inset:auto 0 0 auto;width:66%;height:65%;border-radius:100% 0 0 0;background-color:#fffaf0;background-image:radial-gradient(circle at 12px 12px,transparent 6px,#fffaf0 6.7px,#fffaf0 8px,transparent 8.7px);background-size:24px 24px}
+.card-meta{padding:12px 12px 14px}.card-meta strong{display:block;font-size:14px;margin-bottom:4px}.card-meta span{font-size:11px;color:var(--muted)}
+.card-action{display:block;margin-top:10px;font-size:11px;color:var(--terracotta);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.panel{display:none}.panel.active{display:block}
+.back-button{border:0;background:transparent;padding:8px 0;color:var(--muted);font-size:13px;margin:0 0 6px}
+.editor-card{background:var(--white);border:1px solid var(--line);border-radius:22px;padding:16px;margin:15px 0}
+.preview{height:360px;border-radius:15px;overflow:hidden;position:relative;background:linear-gradient(150deg,#d9d5c5,#a7b4a1)}
+.preview-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.preview-lace{position:absolute;left:0;right:0;top:0;height:34%;background-color:#fffdf8e9;background-image:radial-gradient(circle at 12px 12px,transparent 7px,#fffdf8 7.5px,#fffdf8 9px,transparent 9.5px),radial-gradient(circle at 0 0,transparent 6px,#fffdf8 6.5px,#fffdf8 8px,transparent 8.5px);background-size:24px 24px,24px 24px}
+.preview-lace:after{content:"";position:absolute;left:0;right:0;bottom:-13px;height:26px;background:radial-gradient(circle at 12px 0,#fffdf8 12px,transparent 12.8px) 0 0/24px 26px repeat-x}
+.preview-lace.bottom{top:auto;bottom:0}.preview-lace.bottom:after{top:-13px;bottom:auto;transform:rotate(180deg)}
+.preview-lace.corner{left:auto;top:auto;right:0;bottom:0;width:62%;height:55%;border-radius:100% 0 0 0}
+.preview-lace.corner:after{display:none}
+.preview-label{position:absolute;bottom:15px;left:15px;background:#1e211b99;color:white;border-radius:99px;padding:8px 11px;font-size:11px}
+.upload{display:flex;align-items:center;justify-content:center;gap:8px;border:1px dashed #c8b9a6;border-radius:14px;padding:15px;text-align:center;font-size:13px;color:var(--terracotta);font-weight:700;background:#fbf7ef;margin-top:13px}
+input[type=file]{display:none}
+.control-label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin:14px 0 8px}
+.choice-row{display:flex;gap:8px}.choice{flex:1;border:1px solid var(--line);border-radius:12px;background:#fffdf8;padding:11px 7px;font-size:12px;color:var(--muted)}.choice.selected{border-color:var(--terracotta);background:#f5e8df;color:#8e4d37;font-weight:700}
+.primary{width:100%;border:0;border-radius:14px;background:var(--ink);color:white;padding:15px;font-size:14px;font-weight:700;margin-top:14px}
+.secondary{width:100%;border:1px solid var(--line);border-radius:14px;background:transparent;color:var(--ink);padding:13px;font-size:13px;font-weight:600;margin-top:9px}
+.note{font-size:11px;line-height:1.45;color:var(--muted);margin:12px 2px 0}
+.pro-card{background:#e9e6d9;border-radius:22px;padding:20px;margin-top:24px}
+.pro-card h3{font-family:Georgia,serif;font-weight:500;font-size:24px;margin:0 0 8px}.pro-card p{font-size:13px;line-height:1.5;color:#66675d;margin:0 0 13px}
+.pro-row{display:flex;justify-content:space-between;align-items:center;font-size:12px}.price{font-size:19px;font-weight:700}
+.bottom-nav{position:fixed;z-index:5;bottom:0;left:0;right:0;background:#f6f1e8ed;backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;justify-content:center}
+.nav-inner{width:100%;max-width:440px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.nav-item{border:0;background:transparent;color:var(--muted);font-size:10px;padding:6px;border-radius:12px;display:flex;align-items:center;justify-content:center;gap:5px;flex-direction:column}
+.nav-item svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}.nav-item.active{color:var(--terracotta);background:#efe4d9}
+.toast{position:fixed;z-index:9;bottom:100px;left:50%;transform:translateX(-50%);background:#292923;color:white;padding:11px 15px;border-radius:99px;font-size:12px;max-width:90vw;display:none;box-shadow:0 8px 30px #0002}
+.empty{border:1px dashed var(--line);padding:24px;text-align:center;border-radius:18px;color:var(--muted);font-size:13px}
+@media(min-width:600px){body{padding:20px 0}.app{border:1px solid var(--line);border-radius:28px;min-height:calc(100vh - 40px);padding-bottom:40px}.bottom-nav{position:static;background:transparent;border:0;padding:14px 0 0}.nav-inner{max-width:100%}.toast{bottom:30px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar"><div class="brand">seme<span>daki</span></div><div class="pill">Made of memories</div></header>
+  <main>
+    <section id="explore" class="panel active">
+      <div class="eyebrow">A little piece of home</div>
+      <h1>Tradition, with<br>a modern twist.</h1>
+      <p class="intro">Remember the lace doilies on yiayia’s TV? Bring that little piece of home to your screen.</p>
+      <div class="hero" role="img" aria-label="A lace doily over a warm, nostalgic background">
+        <div class="hero-bg"></div><div class="hero-sun"></div><div class="hero-lace"></div>
+        <div class="hero-caption"><small>The original collection · No. 01</small><strong>Yiayia’s living room</strong></div>
+      </div>
+      <div class="section-head"><h2>Find your semedaki</h2><button class="text-button" onclick="showToast('More designs are coming soon ✨')">View all ↗</button></div>
+      <div class="designs">
+        <button class="design-card" onclick="chooseDesign('Yiayia’s classic','top')"><div class="design-art art-1"><div class="motif top"></div></div><div class="card-meta"><strong>Yiayia’s classic</strong><span>Traditional · Cream lace</span><span class="card-action">Try this design ↗</span></div></button>
+        <button class="design-card" onclick="chooseDesign('Sunday peach','bottom')"><div class="design-art art-2"><div class="motif bottom"></div></div><div class="card-meta"><strong>Sunday peach</strong><span>Warm · Soft and sweet</span><span class="card-action">Try this design ↗</span></div></button>
+        <button class="design-card" onclick="chooseDesign('Island morning','corner')"><div class="design-art art-3"><div class="motif corner"></div></div><div class="card-meta"><strong>Island morning</strong><span>Airy · Sea-glass tones</span><span class="card-action">Try this design ↗</span></div></button>
+        <button class="design-card" onclick="chooseDesign('Golden hour','top')"><div class="design-art art-4"><div class="motif top"></div></div><div class="card-meta"><strong>Golden hour</strong><span>Sunlit · Vintage gold</span><span class="card-action">Try this design ↗</span></div></button>
+      </div>
+      <div class="pro-card"><div class="eyebrow" style="margin-top:0">Your story, your lace</div><h3>MY SEMEDAKI</h3><p>Use a photo of your family’s own handmade lace and turn it into a personal wallpaper. This prototype previews the experience locally on your device.</p><div class="pro-row"><span>One-time unlock concept</span><span class="price">€4.99</span></div><button class="primary" onclick="openPanel('create')">Make it yours ↗</button></div>
+      <p class="note">Prototype v0.1 · No account, no tracking, no server. Nothing is uploaded.</p>
+    </section>
+    <section id="create" class="panel">
+      <button class="back-button" onclick="openPanel('explore')">← Back to Explore</button>
+      <div class="eyebrow">My semedaki</div><h1>Make it<br>personal.</h1>
+      <p class="intro">Try a photo of your own lace. It stays in this browser; this demo doesn’t upload or sell anything.</p>
+      <div class="editor-card">
+        <div class="preview" id="preview">
+          <img id="previewPhoto" class="preview-photo" alt="Your uploaded semedaki preview">
+          <div class="preview-lace" id="previewLace"></div>
+          <div class="preview-label" id="previewLabel">Yiayia’s classic · Preview</div>
+        </div>
+        <label class="upload" for="photoInput"><span>＋</span><span id="uploadLabel">Choose a photo of your semedaki</span></label>
+        <input id="photoInput" type="file" accept="image/*">
+        <div class="control-label"><span>Choose composition</span><span>Live preview</span></div>
+        <div class="choice-row">
+          <button class="choice selected" data-layout="top" onclick="setLayout('top',this)">Top edge</button>
+          <button class="choice" data-layout="bottom" onclick="setLayout('bottom',this)">Bottom edge</button>
+          <button class="choice" data-layout="corner" onclick="setLayout('corner',this)">Corner</button>
+        </div>
+        <button class="primary" onclick="downloadWallpaper()">Save wallpaper image ↓</button>
+        <button class="secondary" onclick="saveCurrent()">♡ Save this design</button>
+        <button class="secondary" onclick="resetEditor()">Reset preview</button>
+        <p class="note">This demo exports a 1170 × 2532 PNG. The lace effect is a stylised placeholder; transparent-background extraction from your photo is not included yet.</p>
+      </div>
+      <div class="pro-card"><h3>Coming next</h3><p>Real lace cut-out, more patterns, wallpaper sizing for different iPhones, and a guided “Add to Photos” flow. The €4.99 price is a concept only; no payment is taken in this prototype.</p></div>
+    </section>
+    <section id="saved" class="panel">
+      <div class="eyebrow">Your little collection</div><h1>Saved with<br>love.</h1>
+      <p class="intro">Your favourite designs, all in one place.</p>
+      <div id="savedList" class="empty">No saved designs yet.<br>Explore the collection and tap a design to try it.</div>
+      <button class="primary" onclick="openPanel('explore')">Explore designs</button>
+      <p class="note">Saved designs are kept only while this page is open. This first prototype does not store personal data.</p>
+    </section>
+  </main>
+  <nav class="bottom-nav" aria-label="Main navigation"><div class="nav-inner">
+    <button class="nav-item active" data-panel="explore" onclick="openPanel('explore')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4M8 11h6M11 8v6"/></svg><span>EXPLORE</span></button>
+    <button class="nav-item" data-panel="create" onclick="openPanel('create')"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="m21 15-5-5L5 20"/></svg><span>MY SEMEDAKI</span></button>
+    <button class="nav-item" data-panel="saved" onclick="openPanel('saved')"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/></svg><span>SAVED</span></button>
+  </div></nav>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+let currentLayout='top', currentName='Yiayia’s classic', saved=[];
+const panels=['explore','create','saved'];
+function openPanel(name){
+  panels.forEach(p=>document.getElementById(p).classList.toggle('active',p===name));
+  document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.panel===name));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showToast(message){
+ const t=document.getElementById('toast');t.textContent=message;t.style.display='block';
+ clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2600);
+}
+function chooseDesign(name,layout){
+ currentName=name;setLayout(layout,document.querySelector('.choice[data-layout="'+layout+'"]'));
+ document.getElementById('previewLabel').textContent=name+' · Preview';
+ document.getElementById('previewPhoto').style.display='none';
+ document.getElementById('preview').style.background=name==='Sunday peach'?'linear-gradient(150deg,#f0d9c9,#c88b75)':name==='Island morning'?'linear-gradient(150deg,#d8d5c8,#a8b7b0)':name==='Golden hour'?'linear-gradient(150deg,#e8d8ad,#b6a06d)':'linear-gradient(150deg,#dfd1b8,#b2b7a0)';
+ openPanel('create'); showToast('Design selected — make it yours');
+}
+function setLayout(layout,button){
+ currentLayout=layout;
+ const lace=document.getElementById('previewLace');lace.className='preview-lace'+(layout==='top'?'':' '+layout);
+ document.querySelectorAll('.choice').forEach(b=>b.classList.toggle('selected',b.dataset.layout===layout));
+}
+document.getElementById('photoInput').addEventListener('change',e=>{
+ const file=e.target.files&&e.target.files[0];if(!file)return;
+ if(!file.type.startsWith('image/')){showToast('Please choose an image file.');return}
+ const reader=new FileReader();reader.onload=()=>{
+  const img=document.getElementById('previewPhoto');img.src=reader.result;img.style.display='block';
+  document.getElementById('uploadLabel').textContent=file.name.length>27?file.name.slice(0,24)+'…':file.name;
+  currentName='My uploaded semedaki';document.getElementById('previewLabel').textContent='Your photo · Preview';
+  showToast('Photo loaded locally on this device');
+ };reader.readAsDataURL(file);
+});
+function resetEditor(){
+ document.getElementById('previewPhoto').style.display='none';document.getElementById('previewPhoto').removeAttribute('src');
+ document.getElementById('photoInput').value='';document.getElementById('uploadLabel').textContent='Choose a photo of your semedaki';
+ currentName='Yiayia’s classic';document.getElementById('previewLabel').textContent=currentName+' · Preview';
+ setLayout('top',document.querySelector('.choice[data-layout="top"]'));showToast('Preview reset');
+}
+function downloadWallpaper(){
+ const W=1170,H=2532,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d');
+ const bg=document.getElementById('preview');const photo=document.getElementById('previewPhoto');
+ function finish(){
+  ctx.fillStyle='#fffdf8';const laceHeight=Math.round(H*(currentLayout==='corner'?.42:.30));
+  function drawLace(x,y,w,h){
+   ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();ctx.fillStyle='rgba(255,253,248,.94)';ctx.fillRect(x,y,w,h);
+   const step=60;ctx.strokeStyle='#d8cbb9';ctx.lineWidth=2.5;
+   for(let yy=y+step/2;yy<y+h+step;yy+=step){for(let xx=x+step/2;xx<x+w+step;xx+=step){
+    ctx.beginPath();ctx.arc(xx,yy,step*.34,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.arc(xx+step/2,yy+step/2,step*.22,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(xx-step*.2,yy);ctx.lineTo(xx+step*.2,yy);ctx.moveTo(xx,yy-step*.2);ctx.lineTo(xx,yy+step*.2);ctx.stroke();
+   }}
+   ctx.restore();
+  }
+  if(currentLayout==='top')drawLace(0,0,W,laceHeight);
+  else if(currentLayout==='bottom')drawLace(0,H-laceHeight,W,laceHeight);
+  else drawLace(W*.42,H*.60,W*.58,H*.40);
+  ctx.fillStyle='rgba(30,33,27,.72)';ctx.font='28px -apple-system, sans-serif';ctx.fillText('semedaki',48,H-58);
+  canvas.toBlob(blob=>{if(!blob){showToast('Could not create image on this browser.');return}
+   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='semedaki-wallpaper.png';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
+   showToast('Wallpaper PNG created — check your downloads');
+  },'image/png');
+ }
+ const bgStyle=getComputedStyle(bg).backgroundImage;
+ const gradient=ctx.createLinearGradient(0,0,W,H);
+ if(bgStyle.includes('#c88b75')){gradient.addColorStop(0,'#f0d9c9');gradient.addColorStop(1,'#c88b75')}
+ else if(bgStyle.includes('#a8b4a1')){gradient.addColorStop(0,'#d8d5c8');gradient.addColorStop(1,'#a8b7b0')}
+ else if(bgStyle.includes('#b6a06d')){gradient.addColorStop(0,'#e8d8ad');gradient.addColorStop(1,'#b6a06d')}
+ else{gradient.addColorStop(0,'#dfd1b8');gradient.addColorStop(1,'#aeb69e')}
+ ctx.fillStyle=gradient;ctx.fillRect(0,0,W,H);
+ if(photo.style.display==='block'&&photo.complete&&photo.naturalWidth){
+   const scale=Math.max(W/photo.naturalWidth,H/photo.naturalHeight),dw=photo.naturalWidth*scale,dh=photo.naturalHeight*scale;
+   ctx.drawImage(photo,(W-dw)/2,(H-dh)/2,dw,dh);
+ }
+ finish();
+}
+function saveCurrent(){
+ if(!saved.some(s=>s.name===currentName)){saved.push({name:currentName,layout:currentLayout});renderSaved();showToast('Added to Saved ♥')}
+ else showToast('Already in your saved collection ♥');
+}
+function renderSaved(){
+ const el=document.getElementById('savedList');
+ if(!saved.length){el.className='empty';el.innerHTML='No saved designs yet.<br>Explore the collection and tap a design to try it.';return}
+ el.className='designs';el.innerHTML='';
+ saved.forEach(s=>{const b=document.createElement('button');b.className='design-card';b.innerHTML='<div class="design-art art-1"><div class="motif '+s.layout+'"></div></div><div class="card-meta"><strong></strong><span>Saved design</span><span class="card-action">Open design ↗</span></div>';b.querySelector('strong').textContent=s.name;b.onclick=()=>chooseDesign(s.name,s.layout);el.appendChild(b)});
+}
+document.querySelectorAll('.design-card').forEach(card=>{
+ card.addEventListener('contextmenu',e=>e.preventDefault());
+});
+</script>
+</body>
+</html>
